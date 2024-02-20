@@ -8,10 +8,17 @@ const server = http.createServer((req, res) => {
     'Access-Control-Allow-Origin': 'http://localhost:8080'
   });
 
-  setInterval(() => {
-    const message = `data: ${new Date().toLocaleTimeString()}\n\n`;
+  function sendRandomMessage() {
+    const randomInterval = Math.round((Math.random() * 9000) + 1000); // Random interval between 1 and 10 seconds
+    const d = new Date();
+    const nextTick = new Date(d.getTime() + randomInterval);
+    const message = `data: ${d.toLocaleTimeString()} - Next interval: ${randomInterval/1000}s at ${nextTick.toLocaleTimeString()}\n\n`;
     res.write(message);
-  }, 1000);
+  
+    setTimeout(sendRandomMessage, randomInterval); // Set timeout for the next message
+  }
+
+  sendRandomMessage();
 
   req.on('close', () => {
     console.log('Client disconnected');
