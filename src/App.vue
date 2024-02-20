@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     setupSSE() {
-      const eventSource = new EventSource('http://localhost:3000/stream');
+      const eventSource = new EventSource(`http://192.168.178.115:3000/stream`);
       eventSource.onmessage = event => {
         this.messages.push(event.data);
       };
